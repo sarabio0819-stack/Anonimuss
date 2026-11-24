@@ -4,7 +4,350 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Segredo.me — Perguntas e Respostas Anônimas</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --primary: #ec4899;
+      --secondary: #8b5cf6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.25rem;
+      cursor: pointer;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 4rem;
+    }
+
+    .profiles-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .profiles-list {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .profile-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .profile-pill.active {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .profile-header h1 {
+      font-size: 1.35rem;
+    }
+
+    .profile-header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .textarea-wrapper {
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1rem 2.75rem 1rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    #diceBtn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.35rem 0.5rem;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+
+    #charCount {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 0.6rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary, .btn-send {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.65rem 1.2rem;
+    }
+
+    .btn-secondary {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.6rem 1rem;
+    }
+
+    .feed-section {
+      margin-top: 2rem;
+    }
+
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .feed-header h2 {
+      font-size: 1.1rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .tab {
+      background: var(--card);
+      color: var(--muted);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .messages-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .msg-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      overflow: hidden;
+    }
+
+    .msg-question {
+      background: linear-gradient(90deg, rgba(236, 72, 153, 0.15), rgba(139, 92, 246, 0.15));
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .msg-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .msg-text {
+      font-size: 1rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .msg-answer-box {
+      padding: 1rem 1.25rem;
+    }
+
+    .answer-text {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .reply-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .reply-form input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      color: var(--text);
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 1rem;
+    }
+
+    .modal-content label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0.75rem 0 0.3rem;
+    }
+
+    .modal-content input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.6rem;
+      color: var(--text);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -16,13 +359,11 @@
   </header>
 
   <main class="container">
-    <!-- Seletor de Perfis -->
     <section class="profiles-bar">
       <span class="label">Perfis ativos:</span>
       <div id="profilesList" class="profiles-list"></div>
     </section>
 
-    <!-- Card Principal de Envio Anônimo -->
     <section class="card send-card">
       <div class="profile-header">
         <div id="profileAvatar" class="avatar">🌸</div>
@@ -49,7 +390,6 @@
       </form>
     </section>
 
-    <!-- Mural Público -->
     <section class="feed-section">
       <div class="feed-header">
         <h2>Mural de Perguntas & Respostas</h2>
@@ -66,7 +406,6 @@
     </section>
   </main>
 
-  <!-- Modal Criar Perfil -->
   <div id="profileModal" class="modal hidden">
     <div class="modal-content">
       <h2>Criar seu link anônimo</h2>
@@ -88,7 +427,257 @@
     </div>
   </div>
 
-  <!-- Firebase SDK (Modular v10) + App -->
-  <script type="module" src="app.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      doc,
+      setDoc,
+      updateDoc,
+      onSnapshot,
+      query,
+      where,
+      orderBy,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 🔧 COLE AQUI AS CONFIGURAÇÕES DO SEU PROJETO FIREBASE
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_PROJETO.firebaseapp.com",
+      projectId: "SEU_PROJETO_ID",
+      storageBucket: "SEU_PROJETO.appspot.com",
+      messagingSenderId: "SEU_SENDER_ID",
+      appId: "SEU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentUser = (urlParams.get("u") || "isa").toLowerCase();
+    let currentFilter = "all";
+    let unsubscribeMessages = null;
+
+    const randomPrompts = [
+      "Qual foi a coisa mais aleatória que já aconteceu com você?",
+      "Tem algum crush secreto no momento? 👀",
+      "Qual série você recomenda assistir urgente?",
+      "Uma opinião impopular sua?",
+      "Se pudesse viajar hoje para qualquer lugar, para onde iria?",
+      "Qual música você não para de ouvir essa semana?"
+    ];
+
+    const profilesList = document.getElementById("profilesList");
+    const profileAvatar = document.getElementById("profileAvatar");
+    const profileName = document.getElementById("profileName");
+    const profileBio = document.getElementById("profileBio");
+    const questionForm = document.getElementById("questionForm");
+    const questionInput = document.getElementById("questionInput");
+    const charCount = document.getElementById("charCount");
+    const messagesList = document.getElementById("messagesList");
+    const profileModal = document.getElementById("profileModal");
+
+    async function ensureDefaultProfile() {
+      await setDoc(
+        doc(db, "profiles", "isa"),
+        {
+          username: "isa",
+          avatar: "🌸",
+          bio: "Mande uma mensagem 100% anônima para mim!"
+        },
+        { merge: true }
+      );
+    }
+
+    function listenProfiles() {
+      onSnapshot(collection(db, "profiles"), (snapshot) => {
+        profilesList.innerHTML = "";
+        snapshot.forEach((docSnap) => {
+          const p = docSnap.data();
+          const btn = document.createElement("button");
+          btn.className = `profile-pill ${p.username === currentUser ? "active" : ""}`;
+          btn.textContent = `${p.avatar} @${p.username}`;
+          btn.onclick = () => selectProfile(p.username);
+          profilesList.appendChild(btn);
+
+          if (p.username === currentUser) {
+            profileAvatar.textContent = p.avatar;
+            profileName.textContent = `@${p.username}`;
+            profileBio.textContent = p.bio;
+          }
+        });
+      });
+    }
+
+    function selectProfile(username) {
+      currentUser = username.toLowerCase();
+      const newUrl = `${window.location.pathname}?u=${currentUser}`;
+      window.history.pushState({}, "", newUrl);
+      listenProfiles();
+      listenMessages();
+    }
+
+    function listenMessages() {
+      if (unsubscribeMessages) unsubscribeMessages();
+
+      const q = query(
+        collection(db, "messages"),
+        where("to", "==", currentUser),
+        orderBy("createdAt", "desc")
+      );
+
+      unsubscribeMessages = onSnapshot(q, (snapshot) => {
+        const msgs = [];
+        snapshot.forEach((docSnap) => {
+          msgs.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        renderMessages(msgs);
+      });
+    }
+
+    function renderMessages(messages) {
+      const filtered = messages.filter((m) => {
+        if (currentFilter === "answered") return Boolean(m.answer);
+        if (currentFilter === "unanswered") return !m.answer;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        messagesList.innerHTML = `<p class="empty">Nenhuma mensagem por aqui ainda. Seja o primeiro a perguntar! 🤫</p>`;
+        return;
+      }
+
+      messagesList.innerHTML = "";
+      filtered.forEach((msg) => {
+        const card = document.createElement("div");
+        card.className = "msg-card";
+
+        const dateStr = msg.createdAt?.toDate
+          ? msg.createdAt.toDate().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
+          : "Agora mesmo";
+
+        card.innerHTML = `
+          <div class="msg-question">
+            <div class="msg-meta">
+              <span>🕵️ Anônimo perguntou</span>
+              <span>${dateStr}</span>
+            </div>
+            <div class="msg-text">${escapeHTML(msg.text)}</div>
+          </div>
+          <div class="msg-answer-box">
+            ${
+              msg.answer
+                ? `<div class="msg-meta"><span>💬 Resposta de @${currentUser}</span></div>
+                   <div class="answer-text">${escapeHTML(msg.answer)}</div>`
+                : `<form class="reply-form" data-id="${msg.id}">
+                     <input type="text" placeholder="Responder publicamente no mural..." required />
+                     <button type="submit" class="btn-primary">Responder</button>
+                   </form>`
+            }
+          </div>
+        `;
+
+        const replyForm = card.querySelector(".reply-form");
+        if (replyForm) {
+          replyForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const input = replyForm.querySelector("input");
+            const answerText = input.value.trim();
+            if (!answerText) return;
+
+            await updateDoc(doc(db, "messages", msg.id), {
+              answer: answerText
+            });
+          });
+        }
+
+        messagesList.appendChild(card);
+      });
+    }
+
+    questionForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = questionInput.value.trim();
+      if (!text) return;
+
+      await addDoc(collection(db, "messages"), {
+        to: currentUser,
+        text,
+        answer: "",
+        createdAt: serverTimestamp()
+      });
+
+      questionInput.value = "";
+      charCount.textContent = "0/300";
+    });
+
+    questionInput.addEventListener("input", () => {
+      charCount.textContent = `${questionInput.value.length}/300`;
+    });
+
+    document.getElementById("diceBtn").addEventListener("click", () => {
+      const random = randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
+      questionInput.value = random;
+      charCount.textContent = `${random.length}/300`;
+    });
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentFilter = tab.dataset.filter;
+        listenMessages();
+      });
+    });
+
+    document.getElementById("shareBtn").addEventListener("click", async () => {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?u=${currentUser}`;
+      await navigator.clipboard.writeText(shareUrl);
+      alert(`Link copiado! Compartilhe com seus amigos:\n${shareUrl}`);
+    });
+
+    document.getElementById("createProfileBtn").onclick = () => profileModal.classList.remove("hidden");
+    document.getElementById("closeModalBtn").onclick = () => profileModal.classList.add("hidden");
+
+    document.getElementById("newProfileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const avatar = document.getElementById("newAvatar").value.trim() || "✨";
+      const username = document
+        .getElementById("newUsername")
+        .value.trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_]/g, "");
+      const bio = document.getElementById("newBio").value.trim();
+
+      if (!username) return;
+
+      await setDoc(doc(db, "profiles", username), {
+        username,
+        avatar,
+        bio
+      });
+
+      profileModal.classList.add("hidden");
+      selectProfile(username);
+    });
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[m]));
+    }
+
+    ensureDefaultProfile().then(() => {
+      listenProfiles();
+      listenMessages();
+    });
+  </script>
 </body>
 </html>
