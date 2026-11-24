@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Segredo.me — Perguntas e Respostas Anônimas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" id="homeBtn">🤫 Segredo.me</div>
+    <div class="actions">
+      <button id="createProfileBtn" class="btn-secondary">+ Criar meu link</button>
+      <button id="shareBtn" class="btn-primary">Compartilhar link</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Seletor de Perfis -->
+    <section class="profiles-bar">
+      <span class="label">Perfis ativos:</span>
+      <div id="profilesList" class="profiles-list"></div>
+    </section>
+
+    <!-- Card Principal de Envio Anônimo -->
+    <section class="card send-card">
+      <div class="profile-header">
+        <div id="profileAvatar" class="avatar">🌸</div>
+        <div>
+          <h1 id="profileName">@isa</h1>
+          <p id="profileBio">Mande uma mensagem 100% anônima para mim!</p>
+        </div>
+      </div>
+
+      <form id="questionForm">
+        <div class="textarea-wrapper">
+          <textarea
+            id="questionInput"
+            maxlength="300"
+            placeholder="Escreva sua pergunta ou segredo aqui... ninguém vai saber que foi você 👀"
+            required
+          ></textarea>
+          <button type="button" id="diceBtn" title="Gerar pergunta aleatória">🎲</button>
+        </div>
+        <div class="form-footer">
+          <span id="charCount">0/300</span>
+          <button type="submit" class="btn-send">Enviar anonimamente 🚀</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Mural Público -->
+    <section class="feed-section">
+      <div class="feed-header">
+        <h2>Mural de Perguntas & Respostas</h2>
+        <div class="tabs">
+          <button class="tab active" data-filter="all">Todas</button>
+          <button class="tab" data-filter="answered">Respondidas</button>
+          <button class="tab" data-filter="unanswered">Sem resposta</button>
+        </div>
+      </div>
+
+      <div id="messagesList" class="messages-list">
+        <p class="empty">Carregando mensagens...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Criar Perfil -->
+  <div id="profileModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Criar seu link anônimo</h2>
+      <form id="newProfileForm">
+        <label>Escolha um emoji (Avatar)</label>
+        <input type="text" id="newAvatar" value="✨" maxlength="2" required />
+
+        <label>Seu @usuário (sem espaços)</label>
+        <input type="text" id="newUsername" placeholder="ex: joao" required />
+
+        <label>Frase do perfil</label>
+        <input type="text" id="newBio" placeholder="Me pergunte qualquer coisa!" required />
+
+        <div class="modal-actions">
+          <button type="button" id="closeModalBtn" class="btn-secondary">Cancelar</button>
+          <button type="submit" class="btn-primary">Criar Perfil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (Modular v10) + App -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
