@@ -29,7 +29,7 @@
     }
 
     .topbar {
-      max-width: 720px;
+      max-width: 780px;
       margin: 0 auto;
       padding: 1rem;
       display: flex;
@@ -41,58 +41,53 @@
     .brand {
       font-weight: 800;
       font-size: 1.25rem;
-      cursor: pointer;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
     .container {
-      max-width: 720px;
-      margin: 1.5rem auto;
+      max-width: 780px;
+      margin: 1.25rem auto;
       padding: 0 1rem 4rem;
     }
 
-    .profiles-bar {
+    /* Abas da Galera */
+    .tabs-nav {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.45rem;
       margin-bottom: 1.25rem;
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
-    }
-
-    .label {
-      font-size: 0.85rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .profiles-list {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .profile-pill {
       background: var(--card);
+      padding: 0.65rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .person-tab {
+      background: var(--bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 0.4rem 0.85rem;
-      border-radius: 999px;
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.65rem;
       cursor: pointer;
-      font-size: 0.85rem;
-      white-space: nowrap;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
     }
 
-    .profile-pill.active {
+    .person-tab:hover {
+      border-color: var(--primary);
+    }
+
+    .person-tab.active {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       border-color: transparent;
-      font-weight: 600;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
     }
 
     .card {
@@ -106,8 +101,16 @@
     .profile-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1.25rem;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .avatar {
@@ -121,11 +124,11 @@
       font-size: 1.75rem;
     }
 
-    .profile-header h1 {
+    .profile-info h1 {
       font-size: 1.35rem;
     }
 
-    .profile-header p {
+    .profile-info p {
       color: var(--muted);
       font-size: 0.9rem;
     }
@@ -194,10 +197,11 @@
     }
 
     .btn-secondary {
-      background: var(--card);
+      background: var(--bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 0.6rem 1rem;
+      padding: 0.55rem 0.95rem;
+      font-size: 0.85rem;
     }
 
     .feed-section {
@@ -217,20 +221,22 @@
       font-size: 1.1rem;
     }
 
-    .tabs {
+    .filter-tabs {
       display: flex;
       gap: 0.4rem;
     }
 
-    .tab {
+    .filter-tab {
       background: var(--card);
       color: var(--muted);
       padding: 0.4rem 0.8rem;
       font-size: 0.8rem;
+      border: 1px solid var(--border);
     }
 
-    .tab.active {
+    .filter-tab.active {
       background: var(--primary);
+      border-color: var(--primary);
       color: white;
     }
 
@@ -280,7 +286,7 @@
     .reply-form {
       display: flex;
       gap: 0.5rem;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
     }
 
     .reply-form input {
@@ -296,80 +302,31 @@
       text-align: center;
       color: var(--muted);
       padding: 2rem;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .modal.hidden {
-      display: none;
-    }
-
-    .modal-content {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 1rem;
-    }
-
-    .modal-content label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin: 0.75rem 0 0.3rem;
-    }
-
-    .modal-content input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.6rem;
-      color: var(--text);
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.5rem;
-      margin-top: 1.25rem;
+      border-radius: 0.9rem;
+      border: 1px dashed var(--border);
     }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand" id="homeBtn">🤫 Segredo.me</div>
-    <div class="actions">
-      <button id="createProfileBtn" class="btn-secondary">+ Criar meu link</button>
-      <button id="shareBtn" class="btn-primary">Compartilhar link</button>
-    </div>
+    <div class="brand">🤫 Segredo.me</div>
+    <button id="shareBtn" class="btn-secondary">🔗 Copiar link desta aba</button>
   </header>
 
   <main class="container">
-    <section class="profiles-bar">
-      <span class="label">Perfis ativos:</span>
-      <div id="profilesList" class="profiles-list"></div>
-    </section>
+    <!-- Abas dos Participantes -->
+    <nav id="tabsNav" class="tabs-nav" aria-label="Participantes"></nav>
 
-    <section class="card send-card">
+    <!-- Caixa de Envio Anônimo -->
+    <section class="card">
       <div class="profile-header">
-        <div id="profileAvatar" class="avatar">🌸</div>
-        <div>
-          <h1 id="profileName">@isa</h1>
-          <p id="profileBio">Mande uma mensagem 100% anônima para mim!</p>
+        <div class="profile-info">
+          <div id="profileAvatar" class="avatar">🌸</div>
+          <div>
+            <h1 id="profileName">Isa</h1>
+            <p id="profileBio">Mande uma pergunta 100% anônima para Isa!</p>
+          </div>
         </div>
       </div>
 
@@ -378,25 +335,26 @@
           <textarea
             id="questionInput"
             maxlength="300"
-            placeholder="Escreva sua pergunta ou segredo aqui... ninguém vai saber que foi você 👀"
+            placeholder="Escreva sua pergunta anônima aqui... ninguém vai saber que foi você 👀"
             required
           ></textarea>
           <button type="button" id="diceBtn" title="Gerar pergunta aleatória">🎲</button>
         </div>
         <div class="form-footer">
           <span id="charCount">0/300</span>
-          <button type="submit" class="btn-send">Enviar anonimamente 🚀</button>
+          <button type="submit" id="sendBtn" class="btn-send">Enviar para Isa 🚀</button>
         </div>
       </form>
     </section>
 
+    <!-- Mural de Perguntas e Respostas da Aba Selecionada -->
     <section class="feed-section">
       <div class="feed-header">
-        <h2>Mural de Perguntas & Respostas</h2>
-        <div class="tabs">
-          <button class="tab active" data-filter="all">Todas</button>
-          <button class="tab" data-filter="answered">Respondidas</button>
-          <button class="tab" data-filter="unanswered">Sem resposta</button>
+        <h2 id="feedTitle">Mural de Isa</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">Todas</button>
+          <button class="filter-tab" data-filter="answered">Respondidas</button>
+          <button class="filter-tab" data-filter="unanswered">Sem resposta</button>
         </div>
       </div>
 
@@ -406,27 +364,6 @@
     </section>
   </main>
 
-  <div id="profileModal" class="modal hidden">
-    <div class="modal-content">
-      <h2>Criar seu link anônimo</h2>
-      <form id="newProfileForm">
-        <label>Escolha um emoji (Avatar)</label>
-        <input type="text" id="newAvatar" value="✨" maxlength="2" required />
-
-        <label>Seu @usuário (sem espaços)</label>
-        <input type="text" id="newUsername" placeholder="ex: joao" required />
-
-        <label>Frase do perfil</label>
-        <input type="text" id="newBio" placeholder="Me pergunte qualquer coisa!" required />
-
-        <div class="modal-actions">
-          <button type="button" id="closeModalBtn" class="btn-secondary">Cancelar</button>
-          <button type="submit" class="btn-primary">Criar Perfil</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -434,7 +371,6 @@
       collection,
       addDoc,
       doc,
-      setDoc,
       updateDoc,
       onSnapshot,
       query,
@@ -456,67 +392,72 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // Lista fixa das abas solicitadas
+    const PARTICIPANTS = [
+      { id: "isa", name: "Isa", avatar: "🌸" },
+      { id: "kai", name: "Kai", avatar: "⚡" },
+      { id: "sara", name: "Sara", avatar: "✨" },
+      { id: "jhon", name: "Jhon", avatar: "🔥" },
+      { id: "bruna", name: "Bruna", avatar: "🦋" },
+      { id: "efrain", name: "Efrain", avatar: "🎯" },
+      { id: "rubens", name: "Rubens", avatar: "🚀" },
+      { id: "jean", name: "Jean", avatar: "🎧" },
+      { id: "renan", name: "Renan", avatar: "😎" }
+    ];
+
     const urlParams = new URLSearchParams(window.location.search);
-    let currentUser = (urlParams.get("u") || "isa").toLowerCase();
+    const initialParam = (urlParams.get("u") || "isa").toLowerCase();
+    let currentUser = PARTICIPANTS.some((p) => p.id === initialParam) ? initialParam : "isa";
     let currentFilter = "all";
     let unsubscribeMessages = null;
 
     const randomPrompts = [
       "Qual foi a coisa mais aleatória que já aconteceu com você?",
       "Tem algum crush secreto no momento? 👀",
-      "Qual série você recomenda assistir urgente?",
+      "Qual série ou filme você recomenda assistir urgente?",
       "Uma opinião impopular sua?",
       "Se pudesse viajar hoje para qualquer lugar, para onde iria?",
-      "Qual música você não para de ouvir essa semana?"
+      "Qual fofoca ou segredo você nunca contou para ninguém?"
     ];
 
-    const profilesList = document.getElementById("profilesList");
+    const tabsNav = document.getElementById("tabsNav");
     const profileAvatar = document.getElementById("profileAvatar");
     const profileName = document.getElementById("profileName");
     const profileBio = document.getElementById("profileBio");
+    const sendBtn = document.getElementById("sendBtn");
+    const feedTitle = document.getElementById("feedTitle");
     const questionForm = document.getElementById("questionForm");
     const questionInput = document.getElementById("questionInput");
     const charCount = document.getElementById("charCount");
     const messagesList = document.getElementById("messagesList");
-    const profileModal = document.getElementById("profileModal");
 
-    async function ensureDefaultProfile() {
-      await setDoc(
-        doc(db, "profiles", "isa"),
-        {
-          username: "isa",
-          avatar: "🌸",
-          bio: "Mande uma mensagem 100% anônima para mim!"
-        },
-        { merge: true }
-      );
+    function getParticipant(id) {
+      return PARTICIPANTS.find((p) => p.id === id) || PARTICIPANTS[0];
     }
 
-    function listenProfiles() {
-      onSnapshot(collection(db, "profiles"), (snapshot) => {
-        profilesList.innerHTML = "";
-        snapshot.forEach((docSnap) => {
-          const p = docSnap.data();
-          const btn = document.createElement("button");
-          btn.className = `profile-pill ${p.username === currentUser ? "active" : ""}`;
-          btn.textContent = `${p.avatar} @${p.username}`;
-          btn.onclick = () => selectProfile(p.username);
-          profilesList.appendChild(btn);
-
-          if (p.username === currentUser) {
-            profileAvatar.textContent = p.avatar;
-            profileName.textContent = `@${p.username}`;
-            profileBio.textContent = p.bio;
-          }
-        });
+    function renderTabs() {
+      tabsNav.innerHTML = "";
+      PARTICIPANTS.forEach((person) => {
+        const btn = document.createElement("button");
+        btn.className = `person-tab ${person.id === currentUser ? "active" : ""}`;
+        btn.innerHTML = `<span>${person.avatar}</span> <span>${person.name}</span>`;
+        btn.onclick = () => selectTab(person.id);
+        tabsNav.appendChild(btn);
       });
+
+      const active = getParticipant(currentUser);
+      profileAvatar.textContent = active.avatar;
+      profileName.textContent = active.name;
+      profileBio.textContent = `Mande uma pergunta 100% anônima para ${active.name}!`;
+      sendBtn.textContent = `Enviar para ${active.name} 🚀`;
+      feedTitle.textContent = `Mural de ${active.name}`;
     }
 
-    function selectProfile(username) {
-      currentUser = username.toLowerCase();
+    function selectTab(userId) {
+      currentUser = userId;
       const newUrl = `${window.location.pathname}?u=${currentUser}`;
       window.history.pushState({}, "", newUrl);
-      listenProfiles();
+      renderTabs();
       listenMessages();
     }
 
@@ -539,6 +480,7 @@
     }
 
     function renderMessages(messages) {
+      const active = getParticipant(currentUser);
       const filtered = messages.filter((m) => {
         if (currentFilter === "answered") return Boolean(m.answer);
         if (currentFilter === "unanswered") return !m.answer;
@@ -546,7 +488,7 @@
       });
 
       if (filtered.length === 0) {
-        messagesList.innerHTML = `<p class="empty">Nenhuma mensagem por aqui ainda. Seja o primeiro a perguntar! 🤫</p>`;
+        messagesList.innerHTML = `<p class="empty">Nenhuma pergunta na aba de ${active.name} ainda. Seja o primeiro a perguntar! 🤫</p>`;
         return;
       }
 
@@ -562,7 +504,7 @@
         card.innerHTML = `
           <div class="msg-question">
             <div class="msg-meta">
-              <span>🕵️ Anônimo perguntou</span>
+              <span>🕵️ Anônimo perguntou para ${active.name}</span>
               <span>${dateStr}</span>
             </div>
             <div class="msg-text">${escapeHTML(msg.text)}</div>
@@ -570,10 +512,10 @@
           <div class="msg-answer-box">
             ${
               msg.answer
-                ? `<div class="msg-meta"><span>💬 Resposta de @${currentUser}</span></div>
+                ? `<div class="msg-meta"><span>💬 Resposta de ${active.name}</span></div>
                    <div class="answer-text">${escapeHTML(msg.answer)}</div>`
                 : `<form class="reply-form" data-id="${msg.id}">
-                     <input type="text" placeholder="Responder publicamente no mural..." required />
+                     <input type="text" placeholder="Responder como ${active.name}..." required />
                      <button type="submit" class="btn-primary">Responder</button>
                    </form>`
             }
@@ -598,6 +540,7 @@
       });
     }
 
+    // Enviar pergunta anônima (nenhum dado do remetente é gravado)
     questionForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const text = questionInput.value.trim();
@@ -624,9 +567,9 @@
       charCount.textContent = `${random.length}/300`;
     });
 
-    document.querySelectorAll(".tab").forEach((tab) => {
+    document.querySelectorAll(".filter-tab").forEach((tab) => {
       tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".filter-tab").forEach((t) => t.classList.remove("active"));
         tab.classList.add("active");
         currentFilter = tab.dataset.filter;
         listenMessages();
@@ -634,34 +577,10 @@
     });
 
     document.getElementById("shareBtn").addEventListener("click", async () => {
+      const active = getParticipant(currentUser);
       const shareUrl = `${window.location.origin}${window.location.pathname}?u=${currentUser}`;
       await navigator.clipboard.writeText(shareUrl);
-      alert(`Link copiado! Compartilhe com seus amigos:\n${shareUrl}`);
-    });
-
-    document.getElementById("createProfileBtn").onclick = () => profileModal.classList.remove("hidden");
-    document.getElementById("closeModalBtn").onclick = () => profileModal.classList.add("hidden");
-
-    document.getElementById("newProfileForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const avatar = document.getElementById("newAvatar").value.trim() || "✨";
-      const username = document
-        .getElementById("newUsername")
-        .value.trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9_]/g, "");
-      const bio = document.getElementById("newBio").value.trim();
-
-      if (!username) return;
-
-      await setDoc(doc(db, "profiles", username), {
-        username,
-        avatar,
-        bio
-      });
-
-      profileModal.classList.add("hidden");
-      selectProfile(username);
+      alert(`Link da aba de ${active.name} copiado!\n${shareUrl}`);
     });
 
     function escapeHTML(str) {
@@ -674,10 +593,8 @@
       }[m]));
     }
 
-    ensureDefaultProfile().then(() => {
-      listenProfiles();
-      listenMessages();
-    });
+    renderTabs();
+    listenMessages();
   </script>
 </body>
 </html>
